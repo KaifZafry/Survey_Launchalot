@@ -1,0 +1,69 @@
+# ===== Dependencies =====
+**/node_modules/
+node_modules/
+
+# ===== Next.js / Frontend build =====
+**/.next/
+**/out/
+**/.vercel/
+**/.turbo/
+
+# ===== TypeScript / Backend build =====
+**/dist/
+**/build/
+**/lib/
+**/*.tsbuildinfo
+
+# ===== Logs / Coverage =====
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+**/coverage/
+
+
+# root envs
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+# allow example files to be committed
+!**/.env.example
+
+# Common secret/key files
+*.pem
+*.key
+
+# ===== Caches / Temp =====
+**/.cache/
+**/.eslintcache
+**/.stylelintcache
+tmp/
+temp/
+.tmp/
+*.tmp
+*.bak
+
+# ===== Editor / OS files =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.history/
+*.swp
+
+
+# uploads/
+# **/uploads/
+
+# ===== Storybook (if used) =====
+storybook-static/

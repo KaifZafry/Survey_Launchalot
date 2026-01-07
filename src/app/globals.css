@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: 'Calibri';
+  src: url('/fonts/calibri-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Calibri', sans-serif;
+}
+
+/* Base */
+:root {
+  color-scheme: light;
+}
+html,
+body {
+  height: 100%;
+  /* Prevent page-wide horizontal scroll  */
+  overflow-x: clip;
+}
+body {
+  @apply  bg-gray-50 text-gray-900;
+}
+
+/* Reusable UI tokens */
+.input {
+  @apply w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-brand/30;
+}
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+.card {
+  @apply rounded-2xl bg-white p-5 shadow-soft;
+}
+
+.btn {
+  @apply rounded-xl bg-brand px-4 py-2 text-white uppercase tracking-wide text-xs font-semibold hover:bg-brand-hover transition-colors;
+}
+.btn-outline {
+  @apply rounded-xl border border-brand text-brand px-4 py-2 uppercase tracking-wide text-xs font-semibold hover:bg-brand hover:text-white transition-colors;
+}
+
+/* Table */
+.table-wrap {
+  @apply overflow-hidden rounded-2xl bg-white shadow-soft;
+}
+.table {
+  @apply min-w-full text-sm;
+}
+.table thead th {
+  @apply bg-gray-100 uppercase text-[11px] tracking-wide font-semibold text-gray-700 px-3 py-2;
+}
+.table tbody td {
+  @apply px-3 py-2;
+}
+.table tbody tr {
+  @apply hover:bg-gray-50;
+}
+
+/* Page header */
+.page-header {
+  @apply mb-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between;
+}
+.page-title {
+  @apply text-2xl font-semibold;
+}
+.page-actions {
+  @apply flex items-center gap-2;
+}
+
+/* ===== Added for the public survey UI ===== */
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin-slow 14s linear infinite;
+  }
+}
