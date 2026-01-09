@@ -56,7 +56,7 @@ const save = useMutation({
   onSuccess: () => {
     qc.invalidateQueries({ queryKey: ["questions"] });
     alert("Question updated successfully!");
-    router.push("/questions");
+    //router.push("/questions");
   },
 });
 
