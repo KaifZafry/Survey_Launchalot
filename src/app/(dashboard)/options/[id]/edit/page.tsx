@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import client from "@/lib/client";
+import client from "../../../../../lib/client";
 
 type Question = { id: string; text: string };
 type Option = {

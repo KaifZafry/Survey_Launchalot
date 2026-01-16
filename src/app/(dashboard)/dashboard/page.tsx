@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import client from "@/lib/client";
+import client from "../../../lib/client";
 import { FileText, HelpCircle, BarChart2, Bell } from "lucide-react";
 import Link from "next/link";
 

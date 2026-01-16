@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import client from "@/lib/client";
+import client from "../../../../../lib/client";
 import { useMemo, useState } from "react";
 
 type Company = { id: string; name: string };

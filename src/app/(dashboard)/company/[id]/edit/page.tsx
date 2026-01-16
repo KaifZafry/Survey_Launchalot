@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import client from "@/lib/client";
+import client from "../../../../../lib/client";
 
 /* tiny helpers */
 function fileToBase64(file: File): Promise<string> {

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import client from "@/lib/client";
+import client from "../../../lib/client";
 
 type Company = {
   id: string;

@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import client from "@/lib/client";
+import client from "../../../lib/client";
 import ThankYouCard from "@/components/ThankYouCard";
 import { SurveyUIConfig } from "@/types/uiConfig";
 

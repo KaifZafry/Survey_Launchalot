@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import client from "@/lib/client";
+import client from "../../../../lib/client";
 import { toast } from "sonner";
 
 type Company = { id: string; name: string };

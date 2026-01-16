@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Menu, UserCircle2, LogOut } from "lucide-react";
-import client from "@/lib/client";
+import client from "../../lib/client";
 
 export default function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
   const [openUserMenu, setOpenUserMenu] = useState(false);

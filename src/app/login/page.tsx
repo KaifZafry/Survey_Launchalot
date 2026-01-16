@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 
-import client from "@/lib/client";
+import client from "../../lib/client";
 
 type AuthMeta = { configured: boolean; reason?: string };
 
