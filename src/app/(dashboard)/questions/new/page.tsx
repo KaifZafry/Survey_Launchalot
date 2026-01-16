@@ -137,11 +137,7 @@ const addQuestion = useMutation({
       formData.append("image", image);
     }
 
-    return client.post("/questions", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return client.post("/questions", formData);
   },
 
   onSuccess: () => {
