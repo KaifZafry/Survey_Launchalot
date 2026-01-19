@@ -1,5 +1,6 @@
 export interface SurveyUIConfig {
-  backgroundImage: string;
+  config:{
+backgroundImage: string;
 
   poweredBy: {
     logo: string;
@@ -12,4 +13,6 @@ export interface SurveyUIConfig {
   checkbox: {
     text: string;
   };
+  }
+  
 }

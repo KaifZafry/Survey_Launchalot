@@ -76,7 +76,7 @@ function Disclaimer({ onClose }: DisclaimerProps) {
     <div
       style={{
         backgroundImage:
-          `radial-gradient(ellipse at bottom, #2a95c4b5, #0d1b2af2), url(${uiConfig?.backgroundImage})`,
+          `radial-gradient(ellipse at bottom, #2a95c4b5, #0d1b2af2), url(${uiConfig?.config?.backgroundImage})`,
         backgroundSize: "cover, cover",
         backgroundPosition: "center, center",
         backgroundRepeat: "no-repeat, no-repeat",
@@ -87,7 +87,7 @@ function Disclaimer({ onClose }: DisclaimerProps) {
       <div className=" rounded-lg p-6 max-w-4xl w-full mx-4 shadow-lg bg-[#fff]/80">
         <h2 className="text-lg font-bold mb-4 text-gray-900">DISCLAIMER</h2>
         <p className="text-sm text-gray-800 mb-4 leading-snug">
-         {uiConfig?.disclaimer.text}
+         {uiConfig?.config?.disclaimer.text}
         </p>
         <label className="flex items-center mb-4 space-x-2">
           <input
@@ -96,7 +96,7 @@ function Disclaimer({ onClose }: DisclaimerProps) {
             onChange={(e) => setChecked(e.target.checked)}
             className="w-4 h-4"
           />
-          <span className="text-sm text-gray-800">{uiConfig?.checkbox.text} </span>
+          <span className="text-sm text-gray-800">{uiConfig?.config?.checkbox.text} </span>
         </label>
         <div className="flex justify-end space-x-2">
           <button
@@ -111,7 +111,7 @@ function Disclaimer({ onClose }: DisclaimerProps) {
         <p className="text-white text-sm opacity-80">
           Powered by&nbsp;
           <img
-            src={uiConfig?.poweredBy.logo}
+            src={uiConfig?.config?.poweredBy.logo}
             alt="logo"
             className="inline-block h-12 align-middle"
           />
@@ -238,54 +238,63 @@ export default function PublicSurveyPage() {
   const onBack = () => setIndex((i) => Math.max(i - 1, 0));
   const onSubmit = () => submit.mutate();
 
-  const buildSections = () => {
-    if (!data) return [];
-    return data.segments
-      .map((seg, sIdx) => {
-        const rows = seg.questions.map((qq) => {
-          let answersArr: string[] = [];
-          let risksArr: ("green" | "yellow" | "red" | undefined)[] = [];
+ const buildSections = () => {
+  if (!data) return [];
 
-          if (qq.type === "text") {
-            const a = String((answers[qq.id] as string) || "").trim();
-            answersArr = a ? [a] : [];
-          } else if (qq.type === "radio" || qq.type === "checkbox") {
-            const sel = currentArr(qq.id);
-            const chosen = qq.options.filter((o) => sel.includes(o.id));
-            answersArr = chosen.map((o) => o.text);
-            risksArr = chosen.map((o) => {
-              const r = (o.risk || "").toLowerCase();
-              return r === "red"
-                ? "red"
-                : r === "yellow" || r === "amber"
-                ? "yellow"
-                : r === "green"
-                ? "green"
-                : undefined;
-            });
+  return data.segments
+    .map((seg, sIdx) => {
+      const rows = seg.questions.map((qq) => {
+        let answersArr: string[] = [];
+        let risksArr: ("green" | "yellow" | "red")[] = [];
+
+        // -------- TEXT QUESTION --------
+        if (qq.type === "text") {
+          const a = String((answers[qq.id] as string) || "").trim();
+          if (a) {
+            answersArr = [a];
+            risksArr = ["green"]; // text ko safe maan rahe
           }
+        }
 
-          return {
-            question: qq.text,
-            answer: answersArr.join(", "),
-            answers: answersArr,
-            risks: risksArr,
-          };
-        });
+        // -------- RADIO / CHECKBOX --------
+        if (qq.type === "radio" || qq.type === "checkbox") {
+          const selectedIds = currentArr(qq.id); // selected option ids
 
-        const filtered = rows.filter(
-          (r) =>
-            (r.answers && r.answers.length > 0) ||
-            (typeof r.answer === "string" && r.answer.trim().length > 0)
-        );
+          // 🔥 IMPORTANT: ALL options included
+          qq.options.forEach((opt) => {
+            answersArr.push(opt.text);
+
+            if (selectedIds.includes(opt.id)) {
+              // ✅ selected → actual risk
+              const r = (opt.risk || "").toLowerCase();
+              risksArr.push(
+                r === "green"
+                  ? "green"
+                  : r === "yellow" || r === "amber"
+                  ? "yellow"
+                  : "red"
+              );
+            } else {
+              // ❌ unselected → RED
+              risksArr.push("red");
+            }
+          });
+        }
 
         return {
-          title: `Segment ${sIdx + 1}: ${seg.title || ""}`,
-          rows: filtered,
+          question: qq.text,
+          answers: answersArr,
+          risks: risksArr,
         };
-      })
-      .filter((sec) => sec.rows.length > 0);
-  };
+      });
+
+      return {
+        title: `Segment ${sIdx + 1}: ${seg.title || ""}`,
+        rows,
+      };
+    })
+    .filter((sec) => sec.rows.length > 0);
+};
 
   const handleDownloadPdf = async () => {
     try {
@@ -341,7 +350,7 @@ export default function PublicSurveyPage() {
       className="relative min-h-screen overflow-hidden"
       style={{
         backgroundImage:
-          `radial-gradient(ellipse at bottom, #2a95c4b5, #0d1b2af2), url(${uiConfig?.backgroundImage})`,
+          `radial-gradient(ellipse at bottom, #2a95c4b5, #0d1b2af2), url(${uiConfig?.config?.backgroundImage})`,
         backgroundSize: "cover, cover",
         backgroundPosition: "center, center",
         backgroundRepeat: "no-repeat, no-repeat",
@@ -566,7 +575,7 @@ export default function PublicSurveyPage() {
           <span className="text-sm">Powered by</span>
 
           <img
-            src={uiConfig?.poweredBy.logo??""}
+            src={uiConfig?.config?.poweredBy.logo??""}
             alt="Launchalot"
             className="h-14 w-auto object-contain"
           />
@@ -578,8 +587,8 @@ export default function PublicSurveyPage() {
           logos={logos}
           companyName={data.companyName}
           onDownload={handleDownloadPdf}
-          bgimg={uiConfig?.backgroundImage ?? ""}
-          footerlogo={uiConfig?.poweredBy.logo??""}
+          bgimg={uiConfig?.config?.backgroundImage ?? ""}
+          footerlogo={uiConfig?.config?.poweredBy.logo??""}
         />
       )}
     </div>
